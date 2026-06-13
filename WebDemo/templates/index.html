@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Gợi Ý Công Thức Nấu Ăn</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 40px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; text-align: center; }
+        .search-box { text-align: center; margin-bottom: 30px; }
+        input[type="text"] { width: 70%; padding: 12px; border: 1px solid #bdc3c7; border-radius: 5px; font-size: 16px; }
+        input[type="submit"] { padding: 12px 25px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        input[type="submit"]:hover { background-color: #c0392b; }
+        .recipe-card { background: #fff9f4; border-left: 5px solid #e67e22; padding: 20px; margin-bottom: 20px; border-radius: 4px; }
+        .recipe-name { font-size: 22px; color: #d35400; margin-bottom: 10px; font-weight: bold; text-transform: capitalize; }
+        .section-title { font-weight: bold; color: #34495e; margin-top: 10px; }
+        .ingredient-list { margin: 5px 0 0 0; color: #555; line-height: 1.6; }
+        .highlight { color: #27ae60; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Gợi Ý Công Thức Món Ăn (FP-Growth)</h2>
+        <div class="search-box">
+            <form method="POST">
+                <input type="text" name="ingredients" placeholder="Nhập nguyên liệu... (VD: chicken, tomato)" value="{{ user_input }}" required>
+                <input type="submit" value="TÌM MÓN ĂN">
+            </form>
+        </div>
+
+        {% if results %}
+            <h3>Kết quả gợi ý:</h3>
+            {% for item in results %}
+                <div class="recipe-card">
+                    <div class="recipe-name">🍲 {{ item.name }}</div>
+                    
+                    <div class="section-title">Luật kết hợp tìm được:</div>
+                    <p class="ingredient-list highlight">{{ item.combo | join(', ') }}</p>
+                    
+                    <div class="section-title">Toàn bộ nguyên liệu của món ăn:</div>
+                    <p class="ingredient-list">{{ item.full_ingredients | join(', ') }}</p>
+                </div>
+            {% endfor %}
+        {% elif user_input %}
+            <p style="color: red; text-align: center;">Không tìm thấy công thức phù hợp với nguyên liệu này.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
