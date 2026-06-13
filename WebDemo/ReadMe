@@ -2,3 +2,4 @@ tải thư viện pandas và flask
 pip install flask pandas
 
 tại app.py gõ python app.py
+sau khi chạy một url hiện ra bấm vào để khởi động trang web
